@@ -18,7 +18,7 @@ namespace Pañol.Controllers
         private PañolContext db = new PañolContext();
 
         // GET: Usuarios
-        [Admin]
+       // [Admin]
         public ActionResult Index()
         { 
             return View(db.Usuarios.ToList());
@@ -69,7 +69,7 @@ namespace Pañol.Controllers
         }
 
         // GET: Usuarios/Details/5
-       [Admin]
+      // [Admin]
         public ActionResult Details(int? id)
         { //rechaza
             if (Session["Rol"]?.ToString() != "Admin")
@@ -86,24 +86,32 @@ namespace Pañol.Controllers
             }
             return View(usuario);
         }
-        [Admin]
+       // [Admin]
         // GET: Usuarios/Create
         public ActionResult Create()
         { //rechaza
-          
+            ViewBag.Dnis = db.Profesores.ToList();
             return View();
         }
 
         // POST: Usuarios/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Admin]
+       // [Admin]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Username,Password,Rol")] Usuario usuario)
+        public ActionResult Create([Bind(Include = "Id,Username,Password,Rol,Dni")] Usuario usuario)
         { //rechaza
-         
-               
+
+            if (string.IsNullOrWhiteSpace(usuario.Dni))
+            {
+                ModelState.AddModelError("Dni", "Debe ingresar un DNI.");
+            }
+            else if (!db.Profesores.Any(p => p.Dni == usuario.Dni))
+            {
+                ModelState.AddModelError("Dni", "El DNI ingresado no está registrado. Por favor, registre primero ese profesor en la opción 'Agregar Profesor'.");
+            }
+
             //rechaza
             if (ModelState.IsValid)
             {
@@ -115,12 +123,15 @@ namespace Pañol.Controllers
 
             return View(usuario);
         }
-        [Admin]
+       // [Admin]
         // GET: Usuarios/Edit/5
         public ActionResult Edit(int? id)
-        { //rechaza
-           // if (Session["Rol"]?.ToString() != "Admin")
-             //   return RedirectToAction("Login");
+        {
+            ViewBag.Dnis = db.Profesores.ToList();
+
+            //rechaza
+            // if (Session["Rol"]?.ToString() != "Admin")
+            //   return RedirectToAction("Login");
             //rechaza
             if (id == null)
             {
@@ -133,17 +144,28 @@ namespace Pañol.Controllers
             }
             return View(usuario);
         }
-        [Admin]
+       // [Admin]
         // POST: Usuarios/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Username,Password,Rol")] Usuario usuario)
+        public ActionResult Edit([Bind(Include = "Id,Username,Password,Rol,Dni")] Usuario usuario)
         { //rechaza
-           // if (Session["Rol"]?.ToString() != "Admin")
-             //   return RedirectToAction("Login");
+
+            // if (Session["Rol"]?.ToString() != "Admin")
+            //   return RedirectToAction("Login");
             //rechaza
+
+
+            if (string.IsNullOrWhiteSpace(usuario.Dni))
+            {
+                ModelState.AddModelError("Dni", "Debe ingresar un DNI.");
+            }
+            else if (!db.Profesores.Any(p => p.Dni == usuario.Dni))
+            {
+                ModelState.AddModelError("Dni", "El DNI ingresado no está registrado. Por favor, registre primero ese profesor en la opción 'Agregar Profesor'.");
+            }
             if (ModelState.IsValid)
             {
                 usuario.Password = Hasheador.Hashear(usuario.Password);
@@ -154,7 +176,7 @@ namespace Pañol.Controllers
             }
             return View(usuario);
         }
-        [Admin]
+      //  [Admin]
         // GET: Usuarios/Delete/5
         public ActionResult Delete(int? id)
         { 
@@ -170,7 +192,7 @@ namespace Pañol.Controllers
             return View(usuario);
         }
 
-        [Admin]
+     //   [Admin]
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

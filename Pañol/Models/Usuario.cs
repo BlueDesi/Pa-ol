@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Web;
 
@@ -13,7 +14,9 @@ namespace Pañol.Models
         public string Password { get; set; }
         [Column("IdRol")]
         public int Rol { get; set; }
-
+        [Column("DniId")]
+        public string Dni { get; set; }
+       
 
         public Usuario() { }
         public Usuario(string User, string Password)
@@ -22,5 +25,7 @@ namespace Pañol.Models
             this.Password = Password;
 
         }
+
+      
     }
 }

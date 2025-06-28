@@ -22,5 +22,7 @@ namespace Pañol.Data
         public System.Data.Entity.DbSet<Pañol.Models.Usuario> Usuarios { get; set; }
 
         public System.Data.Entity.DbSet<Pañol.Models.Item> Items { get; set; }
+
+        public System.Data.Entity.DbSet<Pañol.Models.Profesor> Profesores { get; set; }
     }
 }
