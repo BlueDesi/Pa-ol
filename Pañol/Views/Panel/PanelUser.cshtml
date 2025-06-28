@@ -6,35 +6,33 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Panel de Administración</title>
+    <title>Panel de Usuario</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Tu CSS -->
     <link href="@Url.Content("~/Content/panel.css")" rel="stylesheet" />
 </head>
 <body>
 
     <div class="container text-center d-flex flex-column justify-content-center align-items-center vh-100">
-        <h1 class="mb-5 text-primary fw-bold">Panel de Administración</h1>
+        <h1 class="mb-5 text-success fw-bold">Panel de Usuario</h1>
 
         <div class="row w-100 justify-content-center g-4">
             <div class="col-12 col-md-6 col-lg-4">
-                <a href="@Url.Action("Index", "Usuarios")" class="btn btn-outline-primary btn-lg w-100">Administrar Usuarios</a>
+                <a href="#" class="btn btn-outline-primary btn-lg w-100">Nuevo Préstamo</a>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
-                <a href="#" class="btn btn-outline-success btn-lg w-100">Administrar Profesores</a>
+                <a href="#" class="btn btn-outline-danger btn-lg w-100">Devolución</a>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
-                <a href="#" class="btn btn-outline-warning btn-lg w-100">Administrar Ítems</a>
+                <a href="#" class="btn btn-outline-warning btn-lg w-100">Pendientes Hoy</a>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
-                <a href="#" class="btn btn-outline-info btn-lg w-100">Administrar Préstamos</a>
+                <a href="#" class="btn btn-outline-info btn-lg w-100">Buscar Préstamo</a>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
-                <a href="#" class="btn btn-outline-dark btn-lg w-100">Estadísticas</a>
+                <a href="#" class="btn btn-outline-dark btn-lg w-100">Gestión Docentes</a>
             </div>
         </div>
     </div>

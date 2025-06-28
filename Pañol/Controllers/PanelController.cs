@@ -13,5 +13,10 @@ namespace Pañol.Controllers
         {
             return View();
         }
+        public ActionResult PanelUser()
+        {
+            return View();
+        }
+
     }
 }

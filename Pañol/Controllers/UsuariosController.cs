@@ -47,10 +47,20 @@ namespace Pañol.Controllers
                     valor = "Error";
                     Session["Username"] = null;
                     Session["IdRol"] = null;
-                }
 
-            ViewBag.Mensaje = valor;
-            return View("Resultao");
+                }
+            if (Session["IdRol"]?.ToString() == "1")
+            {
+                return RedirectToAction("PanelAdmin", "Panel");
+            }
+            else
+            {
+                ViewBag.Mensaje = valor;
+                return RedirectToAction("PanelUser", "Panel");
+
+            }
+
+
         }
 
         public ActionResult Resultao()

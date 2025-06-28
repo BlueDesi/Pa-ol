@@ -209,6 +209,7 @@
     <Content Include="Views\Usuarios\Login.cshtml" />
     <Content Include="Views\Usuarios\Resultao.cshtml" />
     <Content Include="Views\Panel\PanelAdmin.cshtml" />
+    <Content Include="Views\Panel\PanelUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
