@@ -130,6 +130,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\PanelController.cs" />
+    <Compile Include="Controllers\PrestamosController.cs" />
     <Compile Include="Controllers\ProfesoresController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Data\PañolContext.cs" />
@@ -138,6 +139,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Hasheador.cs" />
+    <Compile Include="Models\Prestamo.cs" />
+    <Compile Include="Models\PrestamoItem.cs" />
     <Compile Include="Models\Profesor.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Usuario.cs" />
@@ -224,6 +227,11 @@
     <Content Include="Views\Profesores\Details.cshtml" />
     <Content Include="Views\Profesores\Edit.cshtml" />
     <Content Include="Views\Profesores\Index.cshtml" />
+    <Content Include="Views\Prestamos\Create.cshtml" />
+    <Content Include="Views\Prestamos\Delete.cshtml" />
+    <Content Include="Views\Prestamos\Details.cshtml" />
+    <Content Include="Views\Prestamos\Edit.cshtml" />
+    <Content Include="Views\Prestamos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

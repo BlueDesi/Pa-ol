@@ -24,5 +24,10 @@ namespace Pañol.Data
         public System.Data.Entity.DbSet<Pañol.Models.Item> Items { get; set; }
 
         public System.Data.Entity.DbSet<Pañol.Models.Profesor> Profesores { get; set; }
+
+        public System.Data.Entity.DbSet<Pañol.Models.Prestamo> Prestamos { get; set; }
+
+        public System.Data.Entity.DbSet<Pañol.Models.PrestamoItem> PrestamosItem { get; set; }  // <--- Agrega esta línea
+
     }
 }

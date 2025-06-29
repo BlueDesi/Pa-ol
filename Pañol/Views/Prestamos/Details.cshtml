@@ -1,0 +1,66 @@
+﻿@model Pañol.Models.Prestamo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Prestamo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Profesor.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profesor.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Curso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Curso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaHora_E)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaHora_E)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaHora_D)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaHora_D)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Retira)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Retira)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
