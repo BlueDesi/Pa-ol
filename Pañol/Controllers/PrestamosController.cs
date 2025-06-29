@@ -15,6 +15,58 @@ namespace Pañol.Controllers
     {
         private PañolContext db = new PañolContext();
 
+        public ActionResult Pendientes()
+        {
+            var prestamosPendientes = db.Prestamos
+        .Include(p => p.Profesor)
+        .Include(p => p.Usuario)
+        .Include(p => p.PrestamoItems.Select(pi => pi.Item))
+        .Where(p => !p.Cancela)
+        .ToList();
+
+            return View(prestamosPendientes);
+        }
+        public ActionResult Finalizar(int id)
+        {
+            var prestamo = db.Prestamos
+        .Include(p => p.Profesor)
+        .Include(p => p.Usuario)
+        .Include(p => p.PrestamoItems.Select(pi => pi.Item)) // ← importante
+        .FirstOrDefault(p => p.Id == id);
+
+            if (prestamo == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(prestamo);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Finalizar(int id, string nota)
+        {
+            var prestamo = db.Prestamos.Find(id);
+            if (prestamo == null)
+            {
+                return HttpNotFound();
+            }
+
+            prestamo.Cancela = true;
+            prestamo.Observacion = nota;
+
+            // También podrías poner todos los ítems como disponibles nuevamente si querés:
+            var itemsPrestados = db.PrestamosItem.Where(pi => pi.PrestamoId == id).Select(pi => pi.Item).ToList();
+            foreach (var item in itemsPrestados)
+            {
+                item.Disponible = true;
+            }
+            prestamo.FechaHora_D = DateTime.Now; // ← fecha de devolución
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
         // GET: Prestamos
         public ActionResult Index()
         {
@@ -61,6 +113,7 @@ namespace Pañol.Controllers
         {
             if (ModelState.IsValid)
             {
+                prestamo.FechaHora_E = DateTime.Now;
                 db.Prestamos.Add(prestamo);
                 db.SaveChanges();
 

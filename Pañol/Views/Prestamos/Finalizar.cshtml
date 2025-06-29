@@ -1,0 +1,36 @@
+﻿@model Pañol.Models.Prestamo
+
+@{
+    ViewBag.Title = "Finalizar Préstamo";
+}
+
+<h2>Finalizar Préstamo</h2>
+
+<h4>Profesor: @Model.Profesor.Nombre</h4>
+<h4>Curso: @Model.Curso</h4>
+@if (Model.PrestamoItems != null && Model.PrestamoItems.Any())
+{
+    <div class="alert alert-info">
+        <strong>Debe devolver:</strong>
+        <ul>
+            @foreach (var pi in Model.PrestamoItems)
+            {
+                <li>@pi.Item.Detalle</li>
+            }
+        </ul>
+    </div>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("id", Model.Id)
+
+    <div class="form-group">
+        <label>Observaciones (Nota)</label>
+        <textarea name="nota" class="form-control" rows="4" placeholder="Ej: Devuelto en mal estado, faltó un cable..."></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Finalizar</button>
+    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-default" })
+}

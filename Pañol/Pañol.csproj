@@ -232,6 +232,8 @@
     <Content Include="Views\Prestamos\Details.cshtml" />
     <Content Include="Views\Prestamos\Edit.cshtml" />
     <Content Include="Views\Prestamos\Index.cshtml" />
+    <Content Include="Views\Prestamos\Finalizar.cshtml" />
+    <Content Include="Views\Prestamos\Pendientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
