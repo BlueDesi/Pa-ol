@@ -15,6 +15,34 @@ namespace Pañol.Controllers
     {
         private PañolContext db = new PañolContext();
 
+
+        public ActionResult DevolucionPropios()
+        {
+            int usuarioId = (int)(Session["UsuarioId"] ?? 0);
+
+            var prestamosPendientes = db.Prestamos
+                .Include(p => p.Profesor)
+                .Include(p => p.Usuario)
+                .Include(p => p.PrestamoItems.Select(pi => pi.Item))
+                .Where(p => !p.Cancela && p.UsuarioId == usuarioId) // FILTRAMOS POR USUARIO LOGUEADO
+                .ToList();
+
+            return View(prestamosPendientes);
+        }
+        public ActionResult Buscar(string criterio)
+        {
+            var prestamos = db.Prestamos
+         .Include(p => p.Profesor)
+         .Include(p => p.Usuario)
+         .Include(p => p.PrestamoItems.Select(pi => pi.Item))
+         .Where(p => string.IsNullOrEmpty(criterio)
+                     || p.Profesor.Apellido.ToLower().Contains(criterio.ToLower()))
+         .ToList();
+
+            ViewBag.Criterio = criterio;
+            return View(prestamos);
+        }
+        //buscar
         public ActionResult Pendientes()
         {
             var prestamosPendientes = db.Prestamos
@@ -71,11 +99,13 @@ namespace Pañol.Controllers
         public ActionResult Index()
         {
             var prestamos = db.Prestamos
-                     .Include(p => p.Profesor)
-                     .Include(p => p.Usuario)
-                     .Include(p => p.PrestamoItems.Select(pi => pi.Item)); // ← importante
+                .Include(p => p.Profesor)
+                .Include(p => p.Usuario)
+                .Include(p => p.PrestamoItems.Select(pi => pi.Item))
+                .OrderByDescending(p => p.FechaHora_E) //
+                .ToList();
 
-            return View(prestamos.ToList());
+            return View(prestamos);
         }
 
         // GET: Prestamos/Details/5
@@ -96,12 +126,30 @@ namespace Pañol.Controllers
         // GET: Prestamos/Create
         public ActionResult Create()
         {
-            ViewBag.ProfesorId = new SelectList(db.Profesores, "Id", "Nombre");
-            ViewBag.UsuarioId = new SelectList(db.Usuarios, "Id", "Username");
+            int usuarioId = (int)(Session["UsuarioId"] ?? 0);
+            var usuario = db.Usuarios.Find(usuarioId);
+
+            var profesor = db.Profesores.FirstOrDefault(p => p.Dni == usuario.Dni);
+
+            ViewBag.UsuarioNombreApellido = profesor != null
+                ? profesor.Apellido + ", " + profesor.Nombre
+                : usuario.Username;
+
+            ViewBag.UsuarioRol = usuario.Rol == 1 ? "Administrador" : "Empleado";
+            ViewBag.UsuarioEmail = usuario.Username;
+
+            ViewBag.UsuarioId = usuario.Id;
+
+            ViewBag.ProfesorId = new SelectList(
+                db.Profesores.Select(p => new { p.Id, NombreCompleto = p.Apellido + ", " + p.Nombre }),
+                "Id", "NombreCompleto", profesor?.Id // ← Si coincide por DNI, lo deja seleccionado
+            );
+
             ViewBag.ItemsDisponibles = db.Items
-            .Where(i => i.Disponible)
-            .OrderBy(i => i.Detalle)
-            .ToList();
+                .Where(i => i.Disponible)
+                .OrderBy(i => i.Detalle)
+                .ToList();
+
             return View();
         }
 
@@ -109,10 +157,14 @@ namespace Pañol.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(
     [Bind(Include = "Id,ProfesorId,UsuarioId,Curso,FechaHora_E,FechaHora_D,Retira")] Prestamo prestamo,
-    int[] selectedItems)
+    int[] selectedItems,int? UsuarioId)
+
+           
         {
             if (ModelState.IsValid)
             {
+                int usuarioId = (int)(Session["UsuarioId"] ?? 0);
+                var usuario = db.Usuarios.Find(usuarioId);
                 prestamo.FechaHora_E = DateTime.Now;
                 db.Prestamos.Add(prestamo);
                 db.SaveChanges();

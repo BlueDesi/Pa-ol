@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Pañol.Models.Prestamo>
+
+@{
+    ViewBag.Title = "Devolución de Préstamos Propios";
+}
+
+<h2>Devolución de Préstamos Propios</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No tenés préstamos pendientes para devolver.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover table-responsive">
+        <thead class="thead-dark">
+            <tr>
+                <th>Profesor</th>
+                <th>Fecha de Préstamo</th>
+                <th>Curso</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prestamo in Model)
+            {
+                <tr>
+                    <td>@prestamo.Profesor.Apellido, @prestamo.Profesor.Nombre</td>
+                    <td>@prestamo.FechaHora_E.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@prestamo.Curso</td>
+                    <td><strong style="color:red; font-size:1.2em;">PENDIENTE</strong></td>
+                    <td>
+                        @Html.ActionLink("Devolver", "Finalizar", new { id = prestamo.Id }, new { @class = "btn btn-success btn-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

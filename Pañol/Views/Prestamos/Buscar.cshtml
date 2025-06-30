@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Pañol.Models.Prestamo>
+@{
+    ViewBag.Title = "Buscar Préstamos";
+}
+
+<h2>Buscar Préstamos</h2>
+
+@using (Html.BeginForm("Buscar", "Prestamos", FormMethod.Get))
+{
+  <div>
+      Buscar por apellido del profesor:
+      @Html.TextBox("criterio", ViewBag.Criterio as string, new { @class = "form-control", placeholder = "Ej. González" })
+      <br />
+      <input type="submit" value="Buscar" class="btn btn-primary" />
+  </div>
+}
+
+@if (!Model.Any())
+{
+    <p>No se encontraron préstamos.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Profesor</th>
+            <th>Curso</th>
+            <th>Fecha Entrega</th>
+            <th>Fecha Devolución</th>
+            <th>¿Cancelado?</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Profesor.Nombre</td>
+                <td>@item.Profesor.Apellido</td>
+                <td>@item.Curso</td>
+                <td>@item.FechaHora_E</td>
+                <td>@item.FechaHora_D</td>
+                <td>@item.Cancela</td>
+                <td>
+                    @Html.ActionLink("Ver", "Details", new { id = item.Id }, new { @class = "btn btn-sm btn-info" })
+                </td>
+            </tr>
+        }
+    </table>
+}

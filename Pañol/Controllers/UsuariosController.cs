@@ -18,7 +18,7 @@ namespace Pañol.Controllers
         private PañolContext db = new PañolContext();
 
         // GET: Usuarios
-       // [Admin]
+        [Admin]
         public ActionResult Index()
         { 
             return View(db.Usuarios.ToList());
@@ -29,39 +29,47 @@ namespace Pañol.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> Login(Usuario user1)
-        { string valor = "nulo";
+        
+     public async Task<ActionResult> Login(Usuario user1)
+        {
+            string valor = "nulo";
             string Phas = Hasheador.Hashear(user1.Password);
             user1.Password = Phas;
+
             var q = await db.Usuarios.FirstOrDefaultAsync(m => m.Username == user1.Username && m.Password == user1.Password);
-            if (q!=null)
 
-                if (q != null)
-                {
-                    valor = "Bienvenido";
-                    Session["Username"] = q.Username;
-                    Session["IdRol"] = q.Rol;
-                }
-                else
-                {
-                    valor = "Error";
-                    Session["Username"] = null;
-                    Session["IdRol"] = null;
+            if (q != null)
+            {
+                valor = "Bienvenido";
+                Session["Username"] = q.Username;
+                Session["IdRol"] = q.Rol;
+                Session["UsuarioId"] = q.Id; // 
+            }
+            else
+            {
+                valor = "Error";
+                Session["Username"] = null;
+                Session["IdRol"] = null;
+                Session["UsuarioId"] = null;
 
-                }
-            if (Session["IdRol"]?.ToString() == "1")
+                ViewBag.Mensaje = valor;
+                return View(); // 
+            }
+
+           
+            if (q.Rol == 1)
             {
                 return RedirectToAction("PanelAdmin", "Panel");
             }
             else
             {
-                ViewBag.Mensaje = valor;
                 return RedirectToAction("PanelUser", "Panel");
-
             }
-
-
         }
+
+
+
+
 
         public ActionResult Resultao()
         {

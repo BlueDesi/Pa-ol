@@ -4,67 +4,82 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
+<h2>Crear Préstamo</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Prestamo</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProfesorId, "ProfesorId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ProfesorId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProfesorId, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+    <h4>Prestamo</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <input type="hidden" name="UsuarioId" value="@ViewBag.UsuarioId" />
+    <!-- Datos del usuario logueado -->
+    <div class="form-group">
+        <label class="control-label col-md-2">EMATP / Profesor a cargo del pañol</label>
+        <div class="col-md-10">
+            <p class="form-control-static">
+                <strong>@ViewBag.UsuarioNombreApellido</strong><br />
+                <span>@ViewBag.UsuarioRol</span><br />
+                <span>@ViewBag.UsuarioEmail</span>
+            </p>
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UsuarioId, "UsuarioId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UsuarioId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UsuarioId, "", new { @class = "text-danger" })
-            </div>
+    <hr />
+
+    <!-- Profesor solicitante -->
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Profesor solicitante
+            <span class="text-muted">(Debe estar registrado como profesor)</span>
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("ProfesorId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ProfesorId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Curso, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Curso, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Curso, "", new { @class = "text-danger" })
-            </div>
+    <!-- Curso -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.Curso, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Curso, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Curso, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaHora_E, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="text" name="FechaHora_E" class="form-control"
-                       value="@DateTime.Now.ToString("dd-MM-yyyy HH:mm")" readonly />
-            </div>
+    <!-- Fecha de entrega (ahora) -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.FechaHora_E, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="text" name="FechaHora_E" class="form-control" value="@DateTime.Now.ToString("dd-MM-yyyy HH:mm")" readonly />
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaHora_D, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaHora_D, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaHora_D, "", new { @class = "text-danger" })
-            </div>
+    <!-- Fecha estimada de devolución -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.FechaHora_D, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FechaHora_D, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FechaHora_D, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Retira, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Retira, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Retira, "", new { @class = "text-danger" })
-            </div>
+    <!-- Quién retira -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.Retira, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Retira, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Retira, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-
+    <!-- Ítems disponibles -->
+    <div class="form-group">
+        <label class="control-label col-md-2">Ítems disponibles</label>
+        <div class="col-md-10">
             @if ((ViewBag.ItemsDisponibles as List<Pañol.Models.Item>).Any())
             {
                 foreach (var item in ViewBag.ItemsDisponibles as List<Pañol.Models.Item>)
@@ -79,22 +94,19 @@
             {
                 <p>No hay ítems disponibles para préstamo.</p>
             }
-
-
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
         </div>
     </div>
-    <p>Aqui deberian cargarse los items....</p>
-    <h4>Seleccioná los ítems a prestar:</h4>
- 
+
+    <!-- Botón de enviar -->
+    <div class="form-group text-center">
+        <input type="submit" value="Generar Préstamo" class="btn btn-success btn-lg" />
+    </div>
+</div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver al listado", "Index")
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @Scripts.Render("~/bundles/jqueryval")}
