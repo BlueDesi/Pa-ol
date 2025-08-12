@@ -18,5 +18,17 @@ namespace Pañol.Controllers
             return View();
         }
 
+        public ActionResult VolverAlPanel()
+        {
+            var rol = Session["IdRol"] != null ? Convert.ToInt32(Session["IdRol"]) : 0;
+
+            if (rol == 1) 
+                return RedirectToAction("PanelAdmin");
+            else if (rol > 1) 
+                return RedirectToAction("PanelUser");
+            else
+                return RedirectToAction("Login", "Usuarios"); 
+        }
+
     }
 }

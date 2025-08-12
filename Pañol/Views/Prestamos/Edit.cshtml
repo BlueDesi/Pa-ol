@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Prestamo</h4>
         <hr />
@@ -72,6 +72,7 @@
         </div>
     </div>
 }
+@Html.ActionLink("Volver al panel", "VolverAlPanel", "Panel", null, new { @class = "btn btn-primary" })
 
 <div>
     @Html.ActionLink("Back to List", "Index")

@@ -7,12 +7,12 @@
 
 @using (Html.BeginForm("Buscar", "Prestamos", FormMethod.Get))
 {
-  <div>
-      Buscar por apellido del profesor:
-      @Html.TextBox("criterio", ViewBag.Criterio as string, new { @class = "form-control", placeholder = "Ej. González" })
-      <br />
-      <input type="submit" value="Buscar" class="btn btn-primary" />
-  </div>
+    <div>
+        Buscar por apellido del profesor:
+        @Html.TextBox("criterio", ViewBag.Criterio as string, new { @class = "form-control", placeholder = "Ej. González" })
+        <br />
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </div>
 }
 
 @if (!Model.Any())
@@ -46,4 +46,6 @@ else
             </tr>
         }
     </table>
+    @Html.ActionLink("Volver al panel", "VolverAlPanel", "Panel", null, new { @class = "btn btn-primary" })
+
 }

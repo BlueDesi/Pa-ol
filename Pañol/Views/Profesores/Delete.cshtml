@@ -37,7 +37,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
@@ -45,4 +46,6 @@
             @Html.ActionLink("Back to List", "Index")
         </div>
     }
+    @Html.ActionLink("Volver al panel", "VolverAlPanel", "Panel", null, new { @class = "btn btn-primary" })
+
 </div>

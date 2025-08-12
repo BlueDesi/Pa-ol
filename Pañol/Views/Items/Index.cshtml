@@ -29,29 +29,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cod_Barras)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Detalle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.F_Alta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.F_Baja)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Disponible)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cod_Barras)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Detalle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.F_Alta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.F_Baja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Disponible)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>
+@Html.ActionLink("Volver al panel", "VolverAlPanel", "Panel", null, new { @class = "btn btn-primary" })

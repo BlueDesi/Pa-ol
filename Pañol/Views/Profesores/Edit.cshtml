@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Profesor</h4>
         <hr />
@@ -52,6 +52,7 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+@Html.ActionLink("Volver al panel", "VolverAlPanel", "Panel", null, new { @class = "btn btn-primary" })
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

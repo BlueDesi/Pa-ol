@@ -10,12 +10,15 @@
 {
     <div class="alert alert-info">
         No tenés préstamos pendientes para devolver.
+        @Html.ActionLink("Volver al panel", "VolverAlPanel", "Panel", null, new { @class = "btn btn-primary" })
+
     </div>
 }
 else
 {
     <table class="table table-bordered table-hover table-responsive">
         <thead class="thead-dark">
+
             <tr>
                 <th>Profesor</th>
                 <th>Fecha de Préstamo</th>
@@ -39,4 +42,6 @@ else
             }
         </tbody>
     </table>
+    @Html.ActionLink("Volver al panel", "VolverAlPanel", "Panel", null, new { @class = "btn btn-primary" })
+
 }
