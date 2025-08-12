@@ -220,5 +220,10 @@ namespace Pañol.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login", "Usuarios");
+        }
     }
 }

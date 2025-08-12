@@ -17,3 +17,6 @@ a.btn {
     a.btn:hover {
         transform: scale(1.05);
     }
+.bg-suave {
+    background-color: #f0f4f8;
+}
