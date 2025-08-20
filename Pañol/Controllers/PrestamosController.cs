@@ -24,7 +24,7 @@ namespace Pañol.Controllers
                 .Include(p => p.Profesor)
                 .Include(p => p.Usuario)
                 .Include(p => p.PrestamoItems.Select(pi => pi.Item))
-                .Where(p => !p.Cancela && p.UsuarioId == usuarioId) // FILTRAMOS POR USUARIO LOGUEADO
+                .Where(p => !p.Cancela && p.UsuarioId == usuarioId) 
                 .ToList();
 
             return View(prestamosPendientes);
@@ -59,7 +59,7 @@ namespace Pañol.Controllers
             var prestamo = db.Prestamos
         .Include(p => p.Profesor)
         .Include(p => p.Usuario)
-        .Include(p => p.PrestamoItems.Select(pi => pi.Item)) // ← importante
+        .Include(p => p.PrestamoItems.Select(pi => pi.Item)) 
         .FirstOrDefault(p => p.Id == id);
 
             if (prestamo == null)
@@ -83,13 +83,12 @@ namespace Pañol.Controllers
             prestamo.Cancela = true;
             prestamo.Observacion = nota;
 
-            // También podrías poner todos los ítems como disponibles nuevamente si querés:
             var itemsPrestados = db.PrestamosItem.Where(pi => pi.PrestamoId == id).Select(pi => pi.Item).ToList();
             foreach (var item in itemsPrestados)
             {
                 item.Disponible = true;
             }
-            prestamo.FechaHora_D = DateTime.Now; // ← fecha de devolución
+            prestamo.FechaHora_D = DateTime.Now; // 
 
             db.SaveChanges();
 
