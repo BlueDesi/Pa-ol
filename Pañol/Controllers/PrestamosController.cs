@@ -6,8 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using Pañol.Data;
 using Pañol.Models;
+using Serilog;
 
 namespace Pañol.Controllers
 {
@@ -155,13 +157,16 @@ namespace Pañol.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-    [Bind(Include = "Id,ProfesorId,UsuarioId,Curso,FechaHora_E,FechaHora_D,Retira")] Prestamo prestamo,
+    [Bind(Include = "Id,ProfesorId,UsuarioId,Curso,FechaHora_D,Retira")] Prestamo prestamo,
     int[] selectedItems,int? UsuarioId)
 
            
         {
+            Log.Information("Creando Prestamo");
+            Log.Information(JsonConvert.SerializeObject(prestamo));
             if (ModelState.IsValid)
             {
+                Log.Information("Modelo Validado");
                 int usuarioId = (int)(Session["UsuarioId"] ?? 0);
                 var usuario = db.Usuarios.Find(usuarioId);
                 prestamo.FechaHora_E = DateTime.Now;
@@ -191,7 +196,7 @@ namespace Pañol.Controllers
 
                 return RedirectToAction("Index");
             }
-
+            Log.Information("Modelo no Validado");
             // 🔁 Si algo falla, volvemos a cargar TODO
             ViewBag.ProfesorId = new SelectList(db.Profesores, "Id", "Nombre", prestamo.ProfesorId);
             ViewBag.UsuarioId = new SelectList(db.Usuarios, "Id", "Username", prestamo.UsuarioId);
